@@ -169,7 +169,7 @@ def main() -> None:
     rows = []
     for path in sorted(args.cells_dir.glob("*.json")):
         row = json.loads(path.read_text(encoding="utf-8"))
-        row["source_json"] = str(path)
+        row["source_json"] = path.name
         rows.append(row)
     by_method: dict[str, list[dict[str, Any]]] = {}
     for row in rows:

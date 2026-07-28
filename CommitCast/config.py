@@ -48,15 +48,6 @@ _C.TTA.COMMITCAST.SRS_HALF_LIFE_ROWS = 512.0
 _C.TTA.COMMITCAST.SRS_WARMUP_ROWS = 16
 _C.TTA.COMMITCAST.SRS_RIDGE = 1e-6
 
-# External FCR ports are intentionally disabled in the default CommitCast
-# process. Their runners load pinned upstream checkouts in separate subprocesses.
-_C.TTA.PORTS = CN()
-_C.TTA.PORTS.ENABLE = False
-_C.TTA.PORTS.NAME = ""
-_C.TTA.PORTS.UPSTREAM_REPO = ""
-_C.TTA.PORTS.UPSTREAM_CFG = ""
-_C.TTA.PORTS.OUTPUT_DIR = "results/fcr_ports"
-
 
 def get_cfg_defaults() -> CN:
     """Return a clone so callers cannot mutate the module-level defaults."""

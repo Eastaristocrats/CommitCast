@@ -8,7 +8,9 @@ import pytest
 import torch
 
 from scripts.fcr_ports import run_cosa
-from scripts.fcr_ports.run_matrix import read_manifest
+from scripts.fcr_ports.generate_manifest import build_manifest, load_yaml
+from scripts.fcr_ports.provenance import PINNED_UPSTREAMS, verify_upstream
+from scripts.fcr_ports.run_matrix import is_complete, read_manifest
 from scripts.fcr_ports.run_tafas_petsa_cell import (
     latest_service_weights,
     official_update_training_mode,
@@ -124,3 +126,113 @@ def test_example_matrix_manifest_covers_all_ports():
     rows = read_manifest(manifest)
     assert {row["method"] for row in rows} == set(PORT_NAMES)
     assert len({row["cell_id"] for row in rows}) == 3
+
+
+def test_generated_public_manifest_is_complete_and_path_portable(tmp_path):
+    root = Path(__file__).resolve().parents[1]
+    spec = load_yaml(root / "configs" / "fcr_ports_experiment.yaml")
+    hparams = load_yaml(root / "configs" / "fcr_ports_hparams.yaml")
+    manifest_path = tmp_path / "manifest.yaml"
+    payload = build_manifest(
+        spec,
+        hparams,
+        manifest_path=manifest_path,
+        external_root=tmp_path / "external",
+        data_root=tmp_path / "data",
+        streams_root=tmp_path / "streams",
+        checkpoints_root=tmp_path / "checkpoints",
+        results_root=tmp_path / "results",
+        device="cuda:0",
+        seeds=[0],
+    )
+    assert payload["settings_per_seed"] == 144
+    assert payload["expected_cells"] == 432
+    assert len(payload["cells"]) == 432
+    assert {
+        method: sum(row["method"] == method for row in payload["cells"])
+        for method in PORT_NAMES
+    } == {method: 144 for method in PORT_NAMES}
+    for row in payload["cells"]:
+        for key in ("repo", "stream_root", "output_dir", "cfg", "base_stream", "output_json"):
+            if key in row:
+                assert not Path(row[key]).is_absolute()
+
+    override = next(
+        row
+        for row in payload["cells"]
+        if row["cell_id"] == "petsa_fcr_weather_patchtst_h336_seed0"
+    )
+    lr_index = override["extra_args"].index("TTA.SOLVER.BASE_LR")
+    assert override["extra_args"][lr_index + 1] == "0.0002"
+
+
+def test_upstream_provenance_requires_frozen_clean_identity(tmp_path, monkeypatch):
+    pinned = PINNED_UPSTREAMS["COSA"]
+    (tmp_path / ".git").mkdir()
+    module = tmp_path / pinned["module"]
+    module.parent.mkdir()
+    module.write_text("placeholder", encoding="utf-8")
+    (tmp_path / "LICENSE").write_text("placeholder", encoding="utf-8")
+
+    def fake_git(repo, *args):
+        del repo
+        return pinned["commit"] if args == ("rev-parse", "HEAD") else ""
+
+    monkeypatch.setattr("scripts.fcr_ports.provenance._git", fake_git)
+    monkeypatch.setattr(
+        "scripts.fcr_ports.provenance.sha256_file",
+        lambda path: (
+            pinned["license_sha256"]
+            if path.name == "LICENSE"
+            else pinned["module_sha256"]
+        ),
+    )
+    result = verify_upstream(
+        tmp_path,
+        project="COSA",
+        expected_commit=pinned["commit"],
+        expected_module_sha256=pinned["module_sha256"],
+        expected_license_sha256=pinned["license_sha256"],
+    )
+    assert result["upstream_commit"] == pinned["commit"]
+    assert result["upstream_verification"] == "git_commit_clean_and_content_hash"
+    with pytest.raises(ValueError, match="pinned identity"):
+        verify_upstream(
+            tmp_path,
+            project="COSA",
+            expected_commit="0" * 40,
+            expected_module_sha256=pinned["module_sha256"],
+            expected_license_sha256=pinned["license_sha256"],
+        )
+
+
+def test_resume_requires_audited_result_content(tmp_path):
+    spec = build_port("TAFAS-FCR")
+    output = tmp_path / "cell.json"
+    row = {
+        "cell_id": "cell",
+        "method": "TAFAS-FCR",
+        "repo": "external/TAFAS",
+        "output_json": "cell.json",
+    }
+    result = {
+        "method": "TAFAS-FCR",
+        "evaluated_elements": 96,
+        "forward_state_mutation_count": 0,
+        "partial_update_training_mode_violation_count": 0,
+        "full_update_eval_mode_violation_count": 0,
+        "post_update_eval_mode_violation_count": 0,
+        "target_identity_max_abs": 0.0,
+        "initial_live_delta_max_abs": 0.0,
+        "max_partial_target_time_minus_issue": -1,
+        "max_full_batch_target_time_minus_issue": -1,
+        "upstream_commit": spec.upstream_commit,
+        "upstream_module_sha256": spec.module_sha256,
+    }
+    import json
+
+    output.write_text(json.dumps(result), encoding="utf-8")
+    assert is_complete(row, tmp_path)
+    result["forward_state_mutation_count"] = 1
+    output.write_text(json.dumps(result), encoding="utf-8")
+    assert not is_complete(row, tmp_path)

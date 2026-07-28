@@ -181,7 +181,6 @@ class _CommitFeatureBuilder:
         issue_full = self.issue[row_start:row_end]
         reforecast_full = self.reforecast[row_start:row_end]
         issue = issue_full[:, active_slice, :]
-        reforecast = reforecast_full[:, active_slice, :]
 
         scale = torch.sqrt(torch.mean(prefix * prefix, dim=1, keepdim=True)) + 1e-4
         denom = scale[:, 0, :]
@@ -453,6 +452,8 @@ class CommitCastAdapter:
 
 
 def build_adapter(cfg, model, norm_module=None) -> CommitCastAdapter:
+    if str(cfg.TTA.NAME).strip().lower() != "commitcast":
+        raise ValueError(f"unsupported TTA.NAME for CommitCast adapter: {cfg.TTA.NAME!r}")
     if norm_module is not None:
         raise ValueError("CommitCast does not use a trainable normalization module")
     return CommitCastAdapter(cfg, model)

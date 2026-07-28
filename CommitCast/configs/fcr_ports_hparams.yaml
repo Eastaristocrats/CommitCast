@@ -1,0 +1,50 @@
+schema_version: 1
+source_sha256: d2b86fcc776728d4bea387d02768fa6aa7d96e9309f83d1c0b67d8bc0e2129f2
+seed_policy: reuse_seed0_per_setting_without_retuning
+horizons: [96, 192, 336, 720]
+petsa_defaults: {gating_init: 0.02, rank: 16, loss_alpha: 0.2}
+petsa_overrides:
+  weather/PatchTST/336: {lr: 0.0002}
+settings:
+  ETTh1:
+    DLinear: {lr: [0.001, 0.001, 0.0005, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    FreTS: {lr: [0.001, 0.0005, 0.0001, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.1, 0.05]}
+    iTransformer: {lr: [0.001, 0.001, 0.0005, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    MICN: {lr: [0.001, 0.0005, 0.0001, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.1, 0.3, 0.3]}
+    OLS: {lr: [0.0005, 0.0001, 0.0001, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.3, 0.1, 0.05]}
+    PatchTST: {lr: [0.001, 0.0005, 0.0001, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.1, 0.1, 0.3, 0.3]}
+  ETTh2:
+    DLinear: {lr: [0.001, 0.003, 0.001, 0.001], weight_decay: [0.0001, 0.0001, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    FreTS: {lr: [0.001, 0.0005, 0.0005, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.05, 0.05]}
+    iTransformer: {lr: [0.001, 0.001, 0.001, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    MICN: {lr: [0.001, 0.0005, 0.0005, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.05, 0.05, 0.05]}
+    OLS: {lr: [0.001, 0.0005, 0.0001, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.1, 0.01]}
+    PatchTST: {lr: [0.0001, 0.0001, 0.0001, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.3, 0.3, 0.3, 0.01]}
+  ETTm1:
+    DLinear: {lr: [0.001, 0.001, 0.001, 0.0005], weight_decay: [0.0001, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    FreTS: {lr: [0.001, 0.001, 0.001, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.05, 0.05]}
+    iTransformer: {lr: [0.0005, 0.001, 0.001, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    MICN: {lr: [0.001, 0.001, 0.001, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.01, 0.01, 0.3]}
+    OLS: {lr: [0.0005, 0.0005, 0.0005, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.05, 0.01]}
+    PatchTST: {lr: [0.0005, 0.0005, 0.0001, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.3, 0.1, 0.3, 0.3]}
+  ETTm2:
+    DLinear: {lr: [0.001, 0.0005, 0.0005, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    FreTS: {lr: [0.0005, 0.0005, 0.0001, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.1, 0.1]}
+    iTransformer: {lr: [0.0005, 0.0005, 0.001, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    MICN: {lr: [0.001, 0.0005, 0.0005, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    OLS: {lr: [0.0005, 0.0005, 0.0005, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    PatchTST: {lr: [0.0001, 0.0001, 0.0001, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.3, 0.1, 0.1, 0.1]}
+  exchange_rate:
+    DLinear: {lr: [0.003, 0.003, 0.005, 0.005], weight_decay: [0.0001, 0.0, 0.0001, 0.0001], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    FreTS: {lr: [0.0005, 0.0005, 0.001, 0.005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.1, 0.1, 0.1, 0.05]}
+    iTransformer: {lr: [0.001, 0.001, 0.003, 0.005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    MICN: {lr: [0.0005, 0.001, 0.003, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.05, 0.1]}
+    OLS: {lr: [0.0005, 0.001, 0.005, 0.005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.05, 0.05, 0.1]}
+    PatchTST: {lr: [0.0005, 0.001, 0.005, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.1, 0.1, 0.1, 0.1]}
+  weather:
+    DLinear: {lr: [0.003, 0.001, 0.001, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0001], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    FreTS: {lr: [0.001, 0.0005, 0.0005, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.05, 0.1, 0.05, 0.1]}
+    iTransformer: {lr: [0.001, 0.001, 0.001, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    MICN: {lr: [0.0001, 0.0005, 0.0005, 0.0005], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.01, 0.01, 0.01, 0.01]}
+    OLS: {lr: [0.001, 0.001, 0.0005, 0.0001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.1, 0.05, 0.05, 0.1]}
+    PatchTST: {lr: [0.0005, 0.0005, 0.0001, 0.001], weight_decay: [0.0, 0.0, 0.0, 0.0], tafas_gating_init: [0.3, 0.1, 0.3, 0.1]}

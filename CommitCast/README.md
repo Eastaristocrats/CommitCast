@@ -1,231 +1,88 @@
-# CommitCast: Same-Commit Forecast Revision under Delayed Feedback
+# CommitCast
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.10%2B-ee4c2c.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-Anonymous implementation of **CommitCast**, a gradient-free revision layer for
-frozen time-series forecasters.
-
-CommitCast addresses a specific online decision: after a forecast has been
-issued and part of its target window has matured, how should the still-unserved
-portion be revised? The candidate is compared with the frozen checkpoint
-reforecast available at the same commit time. This keeps the benefit of newer
-input context separate from the contribution of the revision method.
+CommitCast is a gradient-free output-space adapter for time-series forecasting
+under delayed feedback. It revises the unserved portion of an issued forecast
+when new observations become available while keeping the forecasting model
+frozen.
 
 ## Overview
 
-```text
-origin i                    commit i+d                         future
-   |                            |                                |
-   |-- issue forecast ----------|                                |
-   |                            |-- frozen reforecast -----------|
-   |-- matured prefix labels -->|                                |
-   |                            |-- CommitCast revision -------->|
-                                ^
-                                only information legal here
-```
-
-The upstream forecasting model remains frozen. CommitCast reads:
-
-- chronological frozen forecasts;
-- absolute target alignment implied by origin and lead;
-- labels that have matured before the current commitment;
-- previous forecasts of the same target from different origins.
-
-It does not require gradients, optimizer state, model parameters, or internal
-representations.
-
-## Method
-
-For origin \(i\), commit delay \(d\), and remaining lead \(r\), the matched
-frozen action is:
-
-\[
-\hat y^{\mathrm{base}}_{i,d,r}=\hat y_{i+d,r}.
-\]
-
-The adapter estimates only the residual left by this same-commit reforecast:
-
-\[
-e_{i,d,r}=y_{i,d+r}-\hat y_{i+d,r}.
-\]
-
-Its state combines matured prefix residuals, current forecast geometry, and the
-same-target forecast-vintage path. A lead/channel-specific ridge estimator
-produces a correction proposal. The SRS-512 controller then applies a bounded
-scalar exposure learned only from fully settled service intervals:
-
-\[
-\tilde y=\hat y^{\mathrm{base}}+\alpha
-(\hat y^{\mathrm{proposal}}-\hat y^{\mathrm{base}}),\qquad
-\alpha\in[0,1].
-\]
-
-The frozen configuration uses three commitments at
-\(0.25H, 0.50H, 0.75H\), 12 trajectory/state features, lead-wise label
-maturity, ridge coefficient clipping, and an exponentially discounted
-settled-risk controller with a 512-row half-life.
-
-## Repository Structure
+For an origin `i`, commit delay `d`, and remaining lead `r`, CommitCast uses the
+frozen forecast issued at the current commit as its reference:
 
 ```text
-CommitCast/
-  README.md
-  REPRODUCIBILITY.md
-  CONTRIBUTING.md
-  THIRD_PARTY.md
-  FCR_PORTS.md
-  LICENSE
-  requirements.txt
-  requirements-verified.txt
-  config.py
-  main.py
-  predictor.py
-  trainer.py
-  datasets/
-    build.py
-    loader.py
-  layers/
-    online_ridge.py
-    exposure.py
-  models/
-    build.py
-    forecast.py
-  configs/
-    fcr_ports.yaml
-    fcr_ports_manifest.example.yaml
-  tta/
-    commitcast.py
-    ports/
-      build.py
-  utils/
-    metrics.py
-    misc.py
-    parser.py
-  examples/
-    export_stream.py
-    make_toy_stream.py
-  scripts/
-    commitcast.sh
-    commitcast.ps1
-    fcr_ports/
-      run.py
-      run_cosa.py
-      run_tafas_petsa_cell.py
-      run_matrix.py
-    test.sh
-    test.ps1
-  tests/
+base(i, d, r) = forecast(i + d, r)
 ```
 
-The layout follows COSA's public repository contract directly:
-
-```text
-main.py
-  -> datasets.build.build_dataset
-  -> models.build.build_model / load_best_model
-  -> tta.commitcast.build_adapter
-  -> adapter.adapt
-  -> Predictor.predict
-```
-
-`trainer.py` retains the same top-level training boundary as COSA, but rejects
-training by design: CommitCast is a black-box revision layer and the upstream
-forecaster must remain frozen. The `models/` facade exposes exported checkpoint
-forecasts as the base model, while `layers/` contains the two stateful
-closed-form components used by the adapter. Research workspaces, paper sources,
-private launchers, caches, and raw generated results are not part of this release.
-The organization follows the public entrypoint/factory convention; the
-CommitCast algorithm code is an independent implementation released under this
-repository's MIT license. Architecture attribution and the policy for optional
-baseline integrations are recorded in [`THIRD_PARTY.md`](THIRD_PARTY.md).
-
-The optional `tta/ports` registry follows the same factory convention without
-importing third-party code into the default process. Each port is executed by a
-separate runner under `scripts/fcr_ports`; see
-[`FCR_PORTS.md`](FCR_PORTS.md).
+The adapter estimates a bounded residual correction from matured observations,
+forecast geometry, and previous forecasts of the same target. It does not
+update the forecasting model or use labels that are unavailable at the current
+commit.
 
 ## Requirements
+
+- Python 3.11 or later
+- PyTorch
+- NumPy
+- pandas
+- PyYAML
+- YACS
+
+Install the dependencies with:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-For the exact direct-dependency versions used by the release QA run:
+Use the PyTorch wheel that matches the local CPU or CUDA environment.
 
-```bash
-python -m pip install -r requirements-verified.txt
-```
+## Input Data
 
-Choose the PyTorch CPU/CUDA wheel appropriate for the target machine. The
-verified CUDA build and the limits of this dependency snapshot are recorded in
-[`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
-
-Recommended:
-
-- Python 3.10 or newer;
-- PyTorch 1.10 or newer;
-- CUDA for full benchmark matrices; CPU is sufficient for the toy example.
-
-## Forecast Stream Format
-
-CommitCast is black-box with respect to the forecaster. Export two aligned
-arrays into `adapter_stream.npz`:
+CommitCast reads frozen forecast streams stored as `adapter_stream.npz`:
 
 ```text
-pred: [N, H, C]
-true: [N, H, C]
+pred: float32 array with shape [N, H, C]
+true: float32 array with shape [N, H, C]
 ```
 
-where `pred[i]` is the frozen \(H\)-step forecast issued at chronological
-origin `i`, and `true[i]` is its aligned target window. The same-commit
-reforecast for delay `d` is recovered as:
+`pred[i]` is the forecast issued at origin `i`, and `true[i]` is its aligned
+target window. Consecutive target windows must overlap by one time step.
 
-```python
-checkpoint = pred[d:, :H-d]
-target = true[:-d, d:H]
-```
-
-Use this directory naming convention when possible:
+The expected directory layout is:
 
 ```text
 streams/
-  BASE_<dataset>_<backbone>_h<horizon>_seed<seed>_batch<batch>/
+  BASE_<dataset>_<model>_h<horizon>/
     adapter_stream.npz
 ```
 
-If your forecasts and targets already exist as `.npy` arrays:
+Existing NumPy arrays can be converted with:
 
 ```bash
 python examples/export_stream.py \
   --pred path/to/pred.npy \
   --true path/to/true.npy \
-  --output streams/BASE_ETTh1_DLinear_h96_seed0_batch48/adapter_stream.npz
+  --output streams/BASE_ETTh1_DLinear_h96/adapter_stream.npz
 ```
 
-Checkpoint inference is deliberately kept outside the adapter. This makes the
-frozen forecast tensor, target alignment, and same-commit reference directly
-auditable across different model codebases and hosted forecasting APIs.
+## Usage
 
-## Quick Start
-
-Create a deterministic toy stream:
+Create a small example stream:
 
 ```bash
 python examples/make_toy_stream.py
 ```
 
-Run CommitCast:
+Run CommitCast on CPU:
 
 ```bash
 python main.py \
   DEVICE cpu \
   STREAM.ROOT streams \
-  RESULT_DIR results/toy
+  RESULT_DIR results/commitcast
 ```
 
-Run a filtered benchmark subset with COSA-style dotlist overrides:
+Filter datasets, models, and horizons with COSA-style configuration overrides:
 
 ```bash
 python main.py \
@@ -236,7 +93,7 @@ python main.py \
   RESULT_DIR results/commitcast
 ```
 
-Shell wrappers are also provided:
+Shell wrappers are available for Linux and Windows:
 
 ```bash
 bash scripts/commitcast.sh
@@ -248,95 +105,115 @@ bash scripts/commitcast.sh
 
 ## Optional FCR Ports
 
-`COSA-FCR`, `TAFAS-FCR`, and `PETSA-FCR` are included as optional audited
-baselines. They are disabled by default, require separately installed pinned
-upstream checkouts, and do not change the CommitCast execution path.
+The `COSA-FCR`, `TAFAS-FCR`, and `PETSA-FCR` runners use separately cloned
+upstream repositories. The runners verify the selected Git commit and source
+hash before execution.
 
-See [FCR_PORTS.md](FCR_PORTS.md) for upstream commits, licenses, exact protocol
-semantics, per-method commands, and external artifact requirements. Generated
-cell metrics and aggregate tables belong under the ignored `results/` tree or
-in a separately archived artifact release; they are not committed with source.
+```bash
+git clone https://github.com/bigbases/COSA_ICLR2026 external/COSA
+git -C external/COSA checkout 43a8c8da4de74d5745a8713f6130c523b7df2694
 
-## Outputs
+git clone https://github.com/kimanki/TAFAS external/TAFAS
+git -C external/TAFAS checkout 139bf980671da4daad728a0fc21d8df508b9203d
 
-Each run writes:
-
-```text
-results/commitcast/
-  config.yaml
-  event_metrics.csv
-  summary.csv
-  breakdown_by_stream.csv
-  breakdown_by_dataset.csv
-  breakdown_by_backbone.csv
-  breakdown_by_horizon.csv
-  breakdown_by_commit.csv
-  stream_manifest.json
+git clone https://github.com/BorealisAI/PETSA external/PETSA
+git -C external/PETSA checkout 87853d888e98311ac94e64be920d17b57143b20c
 ```
 
-`stream_manifest.json` records stream shapes and SHA-256 hashes without storing
-local absolute paths.
+Run each optional method in an environment that satisfies the dependency
+versions documented by its pinned upstream repository.
 
-## Protocol Boundary
+Generate the configured experiment grid:
 
-At commitment `i+d`, a prediction may use:
-
-```text
-pred[i, d:]
-pred[i+d, :]
-true[i, :d] - pred[i, :d]
-forecast vintages pred[i+u, d+r-u] for u <= d
-ridge rows whose target time is strictly earlier than the current commit
-exposure rows whose complete served segment has settled
+```bash
+python scripts/fcr_ports/generate_manifest.py \
+  --output path/to/fcr_ports_manifest.yaml \
+  --external_root external \
+  --data_root data \
+  --streams_root streams \
+  --checkpoints_root checkpoints \
+  --results_root results/fcr_ports
 ```
 
-It may not use:
+Check the manifest without starting the external methods:
 
-```text
-true[i, d:] before the revision is emitted
-loss from an unsettled served segment
-future forecast vintages
-updated backbone parameters
+```bash
+python scripts/fcr_ports/run_matrix.py \
+  --manifest path/to/fcr_ports_manifest.yaml \
+  --dry_run
 ```
 
-The tests include counterfactual future-label mutation checks for both the
-residual estimator and the exposure controller.
+Run one shard:
+
+```bash
+python scripts/fcr_ports/run_matrix.py \
+  --manifest path/to/fcr_ports_manifest.yaml \
+  --shard_index 0 \
+  --num_shards 1 \
+  --resume
+```
+
+The setting grid is defined in `configs/fcr_ports_experiment.yaml`, and the
+method parameters are defined in `configs/fcr_ports_hparams.yaml`.
+
+## Project Structure
+
+```text
+CommitCast/
+  config.py
+  main.py
+  predictor.py
+  trainer.py
+  requirements.txt
+  configs/
+  datasets/
+  examples/
+  layers/
+  models/
+  scripts/
+  tests/
+  tta/
+  utils/
+```
+
+The execution path follows the same top-level organization used by COSA and
+TAFAS:
+
+```text
+main.py
+  -> datasets.build
+  -> models.build
+  -> tta.commitcast
+  -> Predictor
+```
 
 ## Tests
 
 ```bash
+python -m pip install pytest==9.0.2 ruff==0.12.7
+python -m ruff check .
 python -m pytest
 ```
 
-Continuous integration runs the same suite on Python 3.10 and 3.12. Protocol-
-sensitive contributions must follow [CONTRIBUTING.md](CONTRIBUTING.md), and the
-frozen public settings and artifact contract are recorded in
-[REPRODUCIBILITY.md](REPRODUCIBILITY.md).
-
-For a full public-release smoke test:
+Protocol-only checks for the optional ports:
 
 ```bash
-python examples/make_toy_stream.py
-python main.py DEVICE cpu STREAM.ROOT streams
-python -m pytest
+python scripts/fcr_ports/run_tafas_petsa_cell.py --self_test_only
+python scripts/fcr_ports/run_cosa.py --repo external/COSA --self_test
 ```
-
-## Citation
-
-During anonymous review:
-
-```bibtex
-@misc{anonymous2026commitcast,
-  title  = {CommitCast: Same-Commit Forecast Revision for Test-Time Adaptation
-            in Time-Series Forecasting under Delayed Feedback},
-  author = {Anonymous},
-  year   = {2026},
-  note   = {Anonymous submission}
-}
-```
-
-Replace the anonymous citation metadata after the review period.
 
 ## License
 
-This implementation is released under the [MIT License](LICENSE).
+The CommitCast core is licensed under the [MIT License](LICENSE).
+
+COSA and PETSA use CC BY-NC-SA 4.0 in the pinned repositories. TAFAS uses the
+non-commercial terms in its pinned `LICENSE`. The optional
+`run_tafas_petsa_cell.py` compatibility layer includes a PETSA-compatible
+objective and follows the corresponding upstream non-commercial terms. The
+upstream license files control use of those methods and their checkpoints.
+
+## Acknowledgements
+
+The repository layout and build/adapt/predict interfaces follow the public
+organization of [COSA](https://github.com/bigbases/COSA_ICLR2026) and
+[TAFAS](https://github.com/kimanki/TAFAS).

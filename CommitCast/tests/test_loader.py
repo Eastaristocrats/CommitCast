@@ -26,6 +26,21 @@ def test_discovery_and_loading(tmp_path: Path):
     np.testing.assert_array_equal(loaded_true, true)
 
 
+def test_discovery_supports_minimal_documented_name(tmp_path: Path):
+    stream_dir = tmp_path / "BASE_ETTh1_DLinear_h96"
+    stream_dir.mkdir()
+    np.savez_compressed(
+        stream_dir / "adapter_stream.npz",
+        pred=np.zeros((12, 96, 1), dtype=np.float32),
+        true=np.zeros((12, 96, 1), dtype=np.float32),
+    )
+    record = discover_streams(tmp_path)[0]
+    assert record.dataset == "ETTh1"
+    assert record.backbone == "DLinear"
+    assert record.horizon == 96
+    assert record.seed == ""
+
+
 def test_loader_rejects_misaligned_arrays(tmp_path: Path):
     path = tmp_path / "adapter_stream.npz"
     np.savez_compressed(
@@ -35,4 +50,3 @@ def test_loader_rejects_misaligned_arrays(tmp_path: Path):
     )
     with pytest.raises(ValueError, match="must share shape"):
         load_stream(path)
-

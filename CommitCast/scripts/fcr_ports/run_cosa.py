@@ -18,6 +18,7 @@ import json
 import math
 import os
 import re
+import sys
 import time
 from collections import deque
 from pathlib import Path
@@ -26,6 +27,12 @@ from typing import Any
 import numpy as np
 import torch
 import torch.nn.functional as F
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.fcr_ports.provenance import PINNED_UPSTREAMS, verify_upstream  # noqa: E402
 
 
 SimpleOutputAdapter: Any | None = None
@@ -78,6 +85,7 @@ RESULT_FIELDS = [
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
+    pinned = PINNED_UPSTREAMS["COSA"]
     parser.add_argument(
         "--repo",
         required=True,
@@ -106,6 +114,13 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--self_test", action="store_true")
+    parser.add_argument("--expected_commit", default=pinned["commit"])
+    parser.add_argument(
+        "--expected_module_sha256", default=pinned["module_sha256"]
+    )
+    parser.add_argument(
+        "--expected_license_sha256", default=pinned["license_sha256"]
+    )
     return parser.parse_args()
 
 
@@ -119,31 +134,32 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def load_upstream_adapter(repo: Path) -> dict[str, str]:
+def load_upstream_adapter(
+    repo: Path,
+    *,
+    expected_commit: str,
+    expected_module_sha256: str,
+    expected_license_sha256: str,
+) -> dict[str, str]:
     """Load COSA from an external checkout without redistributing its source."""
     import importlib
-    import sys
 
     global SimpleOutputAdapter
     repo = repo.resolve()
-    source = repo / "tta" / "cosa.py"
-    license_path = repo / "LICENSE"
-    if not source.is_file():
-        raise FileNotFoundError(f"missing upstream COSA module: {source}")
-    if not license_path.is_file():
-        raise FileNotFoundError(f"missing upstream COSA license: {license_path}")
+    provenance = verify_upstream(
+        repo,
+        project="COSA",
+        expected_commit=expected_commit,
+        expected_module_sha256=expected_module_sha256,
+        expected_license_sha256=expected_license_sha256,
+    )
     sys.path.insert(0, str(repo))
     module = importlib.import_module("tta.cosa")
     module_path = Path(module.__file__).resolve()
     if repo not in module_path.parents:
         raise ImportError(f"loaded COSA from unexpected location: {module_path}")
     SimpleOutputAdapter = module.SimpleOutputAdapter
-    return {
-        "module": "tta/cosa.py",
-        "module_sha256": sha256_file(source),
-        "license": "LICENSE",
-        "license_sha256": sha256_file(license_path),
-    }
+    return provenance
 
 
 def atomic_write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
@@ -624,7 +640,12 @@ def main() -> None:
         value = getattr(args, name)
         if value is not None and not value.is_absolute():
             setattr(args, name, (launch_cwd / value).resolve())
-    upstream = load_upstream_adapter(args.repo)
+    upstream = load_upstream_adapter(
+        args.repo,
+        expected_commit=args.expected_commit,
+        expected_module_sha256=args.expected_module_sha256,
+        expected_license_sha256=args.expected_license_sha256,
+    )
     if args.self_test:
         self_test()
         return

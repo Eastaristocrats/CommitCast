@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# SPDX-License-Identifier: CC-BY-NC-SA-4.0
+# License scope: see the License section in README.md.
 """Causal FCR port of the official TAFAS/PETSA update operators.
 
 This runner preserves each method's official calibration module, loss,
@@ -30,6 +32,12 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.fcr_ports.provenance import PINNED_UPSTREAMS, verify_upstream  # noqa: E402
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
@@ -47,6 +55,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--max_origins", type=int, default=0)
     parser.add_argument("--self_test_only", action="store_true")
+    parser.add_argument("--expected_commit", default="")
+    parser.add_argument("--expected_module_sha256", default="")
+    parser.add_argument("--expected_license_sha256", default="")
     parser.add_argument("opts", nargs=argparse.REMAINDER)
     args = parser.parse_args()
     if args.opts and args.opts[0] == "--":
@@ -374,7 +385,6 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
     weights, segment, service_origins = latest_service_weights(n, horizon)
 
-    method_cfg = getattr(runner.cfg.TTA, args.method)
     events: dict[int, list[tuple[str, int, int, int | None]]] = defaultdict(list)
     start = 0
     while start < n:
@@ -658,11 +668,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "base_stream_sha256": sha256_file(args.base_stream.resolve()),
         "config_sha256": sha256_file(args.cfg.resolve()),
         "runner_sha256": sha256_file(Path(__file__).resolve()),
-        "upstream_module": f"tta/{args.method.lower()}.py",
-        "upstream_module_sha256": sha256_file(
-            args.repo.resolve() / "tta" / f"{args.method.lower()}.py"
-        ),
-        "upstream_license_sha256": sha256_file(args.repo.resolve() / "LICENSE"),
+        **args.upstream_provenance,
     }
     if result["target_identity_max_abs"] != 0.0:
         raise AssertionError(f"target identity mismatch: {result['target_identity_max_abs']}")
@@ -698,6 +704,18 @@ def main() -> None:
         value = getattr(args, name)
         if not value.is_absolute():
             setattr(args, name, (launch_cwd / value).resolve())
+    pinned = PINNED_UPSTREAMS[args.method]
+    args.upstream_provenance = verify_upstream(
+        args.repo,
+        project=args.method,
+        expected_commit=args.expected_commit or pinned["commit"],
+        expected_module_sha256=(
+            args.expected_module_sha256 or pinned["module_sha256"]
+        ),
+        expected_license_sha256=(
+            args.expected_license_sha256 or pinned["license_sha256"]
+        ),
+    )
     result = run(args)
     atomic_json(args.output_json, result)
     print(json.dumps(result, indent=2, sort_keys=True), flush=True)

@@ -1,0 +1,25 @@
+schema_version: 1
+name: canonical_full144
+datasets: [ETTh1, ETTh2, ETTm1, ETTm2, exchange_rate, weather]
+backbones: [DLinear, FreTS, iTransformer, MICN, OLS, PatchTST]
+horizons: [96, 192, 336, 720]
+batch_size: 48
+service_batch_size: 128
+update_cadence: official_paas
+metric_protocol: latest_commit_four_interval
+hyperparameters: configs/fcr_ports_hparams.yaml
+cosa:
+  context: 10
+  steps: 3
+  lr: 0.001
+  weight_decay: 0.0001
+upstreams:
+  COSA-FCR:
+    directory: COSA
+    commit: 43a8c8da4de74d5745a8713f6130c523b7df2694
+  TAFAS-FCR:
+    directory: TAFAS
+    commit: 139bf980671da4daad728a0fc21d8df508b9203d
+  PETSA-FCR:
+    directory: PETSA
+    commit: 87853d888e98311ac94e64be920d17b57143b20c
