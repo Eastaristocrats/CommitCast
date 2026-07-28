@@ -1,0 +1,7 @@
+TTA:
+  PORTS:
+    ENABLE: false
+    NAME: ""
+    UPSTREAM_REPO: ""
+    UPSTREAM_CFG: ""
+    OUTPUT_DIR: results/fcr_ports

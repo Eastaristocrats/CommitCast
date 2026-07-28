@@ -1,0 +1,31 @@
+cells:
+  - cell_id: cosa_etth1_dlinear_h96_seed0
+    method: COSA-FCR
+    repo: ../external/COSA
+    stream_root: ../streams
+    output_dir: ../results/fcr_ports/cosa_etth1_dlinear_h96_seed0
+    extra_args:
+      - --device
+      - cuda:0
+      - --include_regex
+      - ^BASE_ETTh1_DLinear_h96_seed0_batch48$
+      - --metric_protocol
+      - latest_commit_four_interval
+      - --max_streams
+      - "1"
+
+  - cell_id: tafas_etth1_dlinear_h96_seed0
+    method: TAFAS-FCR
+    repo: ../external/TAFAS
+    cfg: ../checkpoints/ETTh1_DLinear_h96_seed0/config.yaml
+    base_stream: ../streams/BASE_ETTh1_DLinear_h96_seed0_batch48/adapter_stream.npz
+    output_json: ../results/fcr_ports/tafas_etth1_dlinear_h96_seed0.json
+    extra_args: []
+
+  - cell_id: petsa_etth1_dlinear_h96_seed0
+    method: PETSA-FCR
+    repo: ../external/PETSA
+    cfg: ../checkpoints/ETTh1_DLinear_h96_seed0/config.yaml
+    base_stream: ../streams/BASE_ETTh1_DLinear_h96_seed0_batch48/adapter_stream.npz
+    output_json: ../results/fcr_ports/petsa_etth1_dlinear_h96_seed0.json
+    extra_args: []
