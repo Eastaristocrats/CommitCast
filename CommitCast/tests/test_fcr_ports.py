@@ -117,6 +117,25 @@ def test_cosa_strict_maturity_is_future_label_invariant(monkeypatch):
     assert altered_audit["context_violation_count"] == 0
 
 
+def test_cosa_metadata_accepts_documented_minimal_stream_name(tmp_path):
+    path = tmp_path / "BASE_ETTh1_DLinear_h96" / "adapter_stream.npz"
+    metadata = run_cosa.stream_metadata(path, None)
+    assert metadata["dataset"] == "ETTh1"
+    assert metadata["backbone"] == "DLinear"
+    assert metadata["horizon"] == 96
+    assert metadata["seed"] == 0
+    full_path = (
+        tmp_path
+        / "BASE_exchange_rate_iTransformer_h336_seed7_batch48"
+        / "adapter_stream.npz"
+    )
+    full_metadata = run_cosa.stream_metadata(full_path, None)
+    assert full_metadata["dataset"] == "exchange_rate"
+    assert full_metadata["backbone"] == "iTransformer"
+    assert full_metadata["horizon"] == 336
+    assert full_metadata["seed"] == 7
+
+
 def test_example_matrix_manifest_covers_all_ports():
     manifest = (
         Path(__file__).resolve().parents[1]

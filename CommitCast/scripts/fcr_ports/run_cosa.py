@@ -198,7 +198,8 @@ def stream_metadata(path: Path, metadata_json: np.ndarray | str | None) -> dict[
     # BASE_exchange_rate_iTransformer_h336_seed0_batch48 and intentionally
     # carry no metadata_json member.
     match = re.fullmatch(
-        r"BASE_(ETTh1|ETTh2|ETTm1|ETTm2|exchange_rate|weather|traffic)_(.+)_h(\d+)_seed(\d+)_batch\d+",
+        r"BASE_(ETTh1|ETTh2|ETTm1|ETTm2|exchange_rate|weather|traffic)_"
+        r"(.+?)_h(\d+)(?:_seed(\d+))?(?:_batch\d+)?",
         path.parent.name,
     )
     if match is None:
@@ -209,7 +210,7 @@ def stream_metadata(path: Path, metadata_json: np.ndarray | str | None) -> dict[
         "path": f"{path.parent.name}/adapter_stream.npz",
         "dataset": dataset,
         "backbone": backbone,
-        "seed": int(seed),
+        "seed": int(seed or 0),
         "horizon": int(horizon),
         "forecast_scope": "all_variables",
     }
