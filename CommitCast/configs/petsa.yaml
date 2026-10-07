@@ -1,0 +1,28 @@
+# Starting profile; no loss component or calibration branch is removed.
+SEED: 0
+RESULT_DIR: results/petsa
+DATA:
+  BASE_DIR: data/
+  NAME: ETTh1
+  SEQ_LEN: 96
+  PRED_LEN: 96
+  TRAIN_RATIO: 0.7
+  TEST_RATIO: 0.2
+MODEL:
+  NAME: DLinear
+TRAIN:
+  ENABLE: false
+  CHECKPOINT_DIR: checkpoints/DLinear/ETTh1_96/
+TEST:
+  ENABLE: false
+TTA:
+  ENABLE: true
+  PETSA:
+    # Official README example, also used by the server baseline preset.
+    # These remain configurable; per-cell LR/WD come from run_petsa.sh.
+    RANK: 16
+    LOSS_ALPHA: 0.2
+    GATING_INIT: 0.02
+    PAAS: true
+    ADJUST_PRED: true
+    CALI_MODULE: true

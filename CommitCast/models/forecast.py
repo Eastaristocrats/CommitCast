@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from datasets.loader import StreamRecord, file_sha256, load_stream
+from datasets.loader import StreamRecord, load_stream
 
 
 @dataclass(frozen=True)
@@ -14,7 +14,6 @@ class ForecastStream:
     record: StreamRecord
     pred: np.ndarray
     true: np.ndarray
-    sha256: str
 
 
 class FrozenForecastModel:
@@ -45,7 +44,6 @@ class FrozenForecastModel:
                 record=record,
                 pred=pred,
                 true=true,
-                sha256=file_sha256(record.path),
             )
 
     def count_parameters(self) -> int:

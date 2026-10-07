@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -75,13 +74,9 @@ def load_stream(record_or_path: StreamRecord | Path) -> tuple[np.ndarray, np.nda
         raise ValueError(f"{path}: stream is too small for commitment replay: {pred.shape}")
     if not np.isfinite(pred).all() or not np.isfinite(true).all():
         raise ValueError(f"{path}: pred/true contain NaN or infinite values")
+    if not np.array_equal(true[:-1, 1:], true[1:, :-1]):
+        raise ValueError(f"{path}: target windows must overlap chronologically at stride 1")
+    if isinstance(record_or_path, StreamRecord) and record_or_path.horizon not in (0, pred.shape[1]):
+        raise ValueError(f"{path}: horizon metadata disagrees with the array")
     return pred, true
-
-
-def file_sha256(path: Path, chunk_size: int = 1024 * 1024) -> str:
-    digest = hashlib.sha256()
-    with Path(path).open("rb") as handle:
-        while chunk := handle.read(chunk_size):
-            digest.update(chunk)
-    return digest.hexdigest()
 

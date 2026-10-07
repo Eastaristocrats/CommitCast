@@ -17,7 +17,8 @@ def _write_stream(root: Path) -> None:
     rng = np.random.default_rng(5)
     stream_dir = root / "BASE_ETTh1_DLinear_h8_seed0_batch4"
     stream_dir.mkdir(parents=True)
-    true = rng.normal(size=(32, 8, 2)).astype(np.float32)
+    timeline = rng.normal(size=(39, 2)).astype(np.float32)
+    true = np.stack([timeline[i:i+8] for i in range(32)])
     pred = true + rng.normal(scale=0.2, size=true.shape).astype(np.float32)
     np.savez_compressed(stream_dir / "adapter_stream.npz", pred=pred, true=true)
 

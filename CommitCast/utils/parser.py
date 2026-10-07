@@ -13,6 +13,7 @@ def _normalize_sequence_overrides(opts: list[str]) -> list:
     normalized: list = list(opts)
     sequence_types = {
         "DATA.PRED_LEN": int,
+        "EVALUATION.SUPPORT_FRACTIONS": float,
         "TTA.COMMITCAST.FRACTIONS": float,
     }
     for index in range(0, len(normalized), 2):
@@ -50,4 +51,8 @@ def load_config(args: argparse.Namespace):
         cfg.merge_from_file(args.cfg_file)
     if args.opts:
         cfg.merge_from_list(_normalize_sequence_overrides(args.opts))
+    if cfg.STREAM.MAX_STREAMS < 0:
+        raise ValueError("STREAM.MAX_STREAMS must be nonnegative")
+    if cfg.TTA.COMMITCAST.FEATURE_MODE not in {"full", "pg", "p", "g"}:
+        raise ValueError("Invalid CommitCast feature mode")
     return cfg

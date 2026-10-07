@@ -3,15 +3,11 @@
 from __future__ import annotations
 
 import numpy as np
+from fcr.scoring import errors, gain
 
 
 def error_sums(target: np.ndarray, prediction: np.ndarray) -> tuple[float, float, int]:
-    diff = np.asarray(target, dtype=np.float64) - np.asarray(prediction, dtype=np.float64)
-    return (
-        float(np.sum(diff * diff, dtype=np.float64)),
-        float(np.sum(np.abs(diff), dtype=np.float64)),
-        int(diff.size),
-    )
+    return errors(target, prediction)
 
 
 def metric_dict(target: np.ndarray, prediction: np.ndarray) -> dict[str, float | int]:
@@ -26,5 +22,5 @@ def metric_dict(target: np.ndarray, prediction: np.ndarray) -> dict[str, float |
 
 
 def gain_pct(base: float, candidate: float) -> float:
-    return 100.0 * (float(base) - float(candidate)) / max(float(base), 1e-12)
+    return gain(float(base), float(candidate))
 

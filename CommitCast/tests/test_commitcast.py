@@ -13,7 +13,8 @@ from tta.commitcast import (
 
 def _stream(seed: int = 7, origins: int = 48, horizon: int = 8, channels: int = 2):
     rng = np.random.default_rng(seed)
-    true = rng.normal(size=(origins, horizon, channels)).astype(np.float32)
+    timeline = rng.normal(size=(origins + horizon - 1, channels)).astype(np.float32)
+    true = np.stack([timeline[i:i+horizon] for i in range(origins)])
     pred = true + rng.normal(scale=0.2, size=true.shape).astype(np.float32)
     return pred, true
 

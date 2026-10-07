@@ -3,17 +3,21 @@
 from __future__ import annotations
 
 import os
-
-from datasets.build import update_cfg_from_dataset
-from models.build import build_model, load_best_model
-from predictor import Predictor
-from trainer import build_trainer
-from tta.commitcast import build_adapter
-from utils.misc import set_devices, set_seeds
-from utils.parser import load_config, parse_args
+import sys
 
 
 def main() -> None:
+    if any(arg == "--method" or arg.startswith("--method=") for arg in sys.argv[1:]):
+        import subprocess
+        from pathlib import Path
+        raise SystemExit(subprocess.call([sys.executable, str(Path(__file__).parent / "scripts/run_baseline.py"), *sys.argv[1:]]))
+    from datasets.build import update_cfg_from_dataset
+    from models.build import build_model, load_best_model
+    from predictor import Predictor
+    from trainer import build_trainer
+    from tta.commitcast import build_adapter
+    from utils.misc import set_devices, set_seeds
+    from utils.parser import load_config, parse_args
     args = parse_args()
     cfg = load_config(args)
 

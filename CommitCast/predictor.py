@@ -12,6 +12,7 @@ import numpy as np
 from tta import AdaptationResult, CommitEvent, commit_schedule
 from utils.metrics import gain_pct, metric_dict
 from utils.misc import parse_csv
+from fcr.scoring import common_origins as support_count, summarize_requests
 
 
 def _summarize(frame: pd.DataFrame, group_columns: list[str]) -> pd.DataFrame:
@@ -54,15 +55,14 @@ class Predictor:
         results: list[AdaptationResult] = []
         for stream in self.model.streams():
             schedule = commit_schedule(int(stream.pred.shape[1]), self.fractions)
-            if not schedule:
-                raise ValueError("at least one commitment fraction is required")
-            common_origins = int(stream.pred.shape[0] - schedule[-1][1])
+            common_origins = support_count(len(stream.pred), int(stream.pred.shape[1]),
+                [parse_csv(self.cfg.EVALUATION.SUPPORT_FRACTIONS, float)])
             events: list[CommitEvent] = []
-            first_delay = int(schedule[0][1])
+            first_delay = int(schedule[0][1]) if schedule else int(stream.pred.shape[1])
             initial = stream.pred[:common_origins, :first_delay, :]
             events.append(
                 CommitEvent(
-                    label=f"issue_to_{schedule[0][0]}",
+                    label=f"issue_to_{schedule[0][0]}" if schedule else "issue_to_end",
                     delay=0,
                     next_delay=first_delay,
                     target=stream.true[:common_origins, :first_delay, :],
@@ -105,21 +105,24 @@ class Predictor:
         output_dir.mkdir(parents=True, exist_ok=True)
         rows: list[dict[str, Any]] = []
         manifest: list[dict[str, Any]] = []
+        request_rows = []
 
         for result in results:
             stream = result.stream
             record = stream.record
             horizon = int(stream.pred.shape[1])
-            stream_hash = stream.sha256
             manifest.append(
                 {
                     "stream": record.stream,
-                    "sha256": stream_hash,
                     "shape": list(stream.pred.shape),
                     "dataset": record.dataset,
                     "backbone": record.backbone,
                     "horizon": horizon,
                     "seed": record.seed,
+                    "request_count": len(result.events[0].target),
+                    "targets_per_request": horizon * stream.pred.shape[2],
+                    "profile": self.cfg.EVALUATION.PROFILE,
+                    "support_fractions": list(self.cfg.EVALUATION.SUPPORT_FRACTIONS),
                 }
             )
             for event in result.events:
@@ -137,7 +140,6 @@ class Predictor:
                     rows.append(
                         {
                             "stream": record.stream,
-                            "stream_sha256": stream_hash,
                             "source": record.source,
                             "dataset": record.dataset,
                             "backbone": record.backbone,
@@ -173,7 +175,7 @@ class Predictor:
                                 if method_name == "CommitCast-Raw"
                                 else 100.0 * float((event.exposure == 0.0).mean())
                             ),
-                            "protocol": "same-commit, non-overlapping served segments",
+                            "protocol": "complete-H; same-commit Base; request-local exactly-once",
                             "adapter_runtime_sec": (
                                 result.runtime_sec / max(1, len(result.events))
                                 if method_name == "CommitCast"
@@ -182,12 +184,53 @@ class Predictor:
                         }
                     )
 
+            # Reconstruct each full request independently of the interval totals.
+            count = len(result.events[0].target)
+            for method_name, attr in (("Base", "checkpoint"),
+                                      ("CommitCast-Raw", "proposal"), ("CommitCast", "prediction")):
+                if self.adapter is None and method_name != "Base":
+                    continue
+                for request in range(count):
+                    row = dict(stream=record.stream, method=method_name, request=request,
+                               sse=0., sae=0., base_sse=0., base_sae=0., atoms=0)
+                    for event in result.events:
+                        scored = metric_dict(event.target[request], getattr(event, attr)[request])
+                        baseline = metric_dict(event.target[request], event.checkpoint[request])
+                        row["sse"] += scored["sse"]
+                        row["sae"] += scored["sae"]
+                        row["base_sse"] += baseline["sse"]
+                        row["base_sae"] += baseline["sae"]
+                        row["atoms"] += scored["evaluated_elements"]
+                    if row["atoms"] != horizon * stream.pred.shape[2]:
+                        raise AssertionError("Each request must contain exactly H*C targets")
+                    request_rows.append(row)
+
         frame = pd.DataFrame(rows)
+        if frame.empty:
+            raise ValueError("No streams matched the input filters")
+        names = {"full": "CommitCast", "pg": "CommitCast-PG", "p": "CommitCast-P", "g": "CommitCast-G"}
+        chosen_name = names[self.cfg.TTA.COMMITCAST.FEATURE_MODE]
+        frame["method"] = frame["method"].replace({"CommitCast": chosen_name,
+                                                     "CommitCast-Raw": chosen_name + "-Raw"})
+        for row in request_rows:
+            row["method"] = row["method"].replace("CommitCast", chosen_name)
+        request_frame = pd.DataFrame(request_rows)
+        request_frame.to_csv(output_dir / "request_metrics.csv", index=False)
+        risk = []
+        for (method, stream_name), group in request_frame.groupby(["method", "stream"]):
+            risk.append(dict(method=method, stream=stream_name,
+                             **summarize_requests(group.to_dict("records"))))
+        pd.DataFrame(risk).to_csv(output_dir / "request_risk.csv", index=False)
         frame.to_csv(output_dir / "event_metrics.csv", index=False)
         _summarize(frame, ["method"]).to_csv(output_dir / "summary.csv", index=False)
         _summarize(frame, ["method", "stream"]).to_csv(
             output_dir / "breakdown_by_stream.csv", index=False
         )
+        cells = _summarize(frame, ["method", "stream"])
+        cells.groupby("method")[["mse_gain_vs_checkpoint_pct", "mae_gain_vs_checkpoint_pct"]].mean().rename(
+            columns={"mse_gain_vs_checkpoint_pct": "equal_cell_mean_mse_gain_pct",
+                     "mae_gain_vs_checkpoint_pct": "equal_cell_mean_mae_gain_pct"}
+        ).to_csv(output_dir / "secondary_macro_summary.csv")
         for column in ("dataset", "backbone", "horizon", "commit"):
             _summarize(frame, ["method", column]).to_csv(
                 output_dir / f"breakdown_by_{column}.csv", index=False

@@ -11,8 +11,8 @@ class Trainer:
     def train(self) -> None:
         raise RuntimeError(
             "CommitCast does not train or fine-tune the upstream forecaster. "
-            "Train the backbone in its native repository, then export a "
-            "chronological adapter_stream.npz file."
+            "Use main.py --method cosa --protocol train --cfg <checkpoint-config>, "
+            "then --protocol export to create a chronological adapter_stream.npz."
         )
 
 
