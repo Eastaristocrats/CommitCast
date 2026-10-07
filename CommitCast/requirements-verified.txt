@@ -1,8 +1,0 @@
-# Direct dependency versions used for release QA.
-# Select the PyTorch wheel (CPU/CUDA) appropriate for the target machine.
-numpy==2.3.5
-pandas==3.0.1
-PyYAML==6.0.3
-torch==2.10.0
-yacs==0.1.8
-pytest==9.0.2
