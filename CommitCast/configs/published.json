@@ -1,0 +1,1326 @@
+{
+  "tafas": {
+    "DLinear": {
+      "ETTh1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "weather_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0001,
+        "GATING_INIT": 0.01
+      },
+      "weather_96": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      }
+    },
+    "FreTS": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "weather_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      }
+    },
+    "iTransformer": {
+      "ETTh1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      }
+    },
+    "MICN": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "weather_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "weather_96": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      }
+    },
+    "OLS": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "weather_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "weather_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.05
+      },
+      "weather_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      }
+    },
+    "PatchTST": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.01
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      },
+      "weather_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.1
+      },
+      "weather_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0,
+        "GATING_INIT": 0.3
+      }
+    }
+  },
+  "petsa": {
+    "DLinear": {
+      "ETTh1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "weather_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0001
+      },
+      "weather_96": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0
+      }
+    },
+    "FreTS": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      }
+    },
+    "iTransformer": {
+      "ETTh1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      }
+    },
+    "MICN": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.003,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_96": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      }
+    },
+    "OLS": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_336": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      }
+    },
+    "PatchTST": {
+      "ETTh1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh1_96": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_192": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_720": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTh2_96": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm1_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_192": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_336": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "ETTm2_96": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_192": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_336": {
+        "BASE_LR": 0.005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_720": {
+        "BASE_LR": 0.0001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "exchange_rate_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_192": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_336": {
+        "BASE_LR": 0.0002,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_720": {
+        "BASE_LR": 0.001,
+        "WEIGHT_DECAY": 0.0
+      },
+      "weather_96": {
+        "BASE_LR": 0.0005,
+        "WEIGHT_DECAY": 0.0
+      }
+    }
+  }
+}
