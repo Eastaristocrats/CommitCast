@@ -1,4 +1,0 @@
-# Original quarter-schedule support N - round(3H/4), still H targets per request.
-EVALUATION:
-  PROFILE: original_quarter_anchor
-  SUPPORT_FRACTIONS: [0.25, 0.5, 0.75]
